@@ -8,6 +8,7 @@
   <!-- Bootstrap -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/css/lightbox.min.css">
   <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css" />
 
@@ -44,6 +45,30 @@
     .gallery img { width:100%; height:220px; object-fit:cover; border-radius:8px; }
 
     /* CONTACT */
+    .form-label {
+      font-weight: 500;
+      margin-bottom: 6px;
+    }
+
+    .form-control {
+      border-radius: 2px;
+      box-shadow: none !important;
+    }
+
+    .form-control:focus {
+      border-color: #17a2b8;
+      box-shadow: 0 0 0 0.1rem rgba(23,162,184,0.25) !important;
+    }
+
+    .btn-accent {
+      background: #12a3e0;
+      color: #fff;
+      border-radius: 6px;
+    }
+    .btn-accent:hover {
+      background: #0d84b3;
+    }
+
     .contact-card { background:#fff; padding:25px; border-radius:10px; box-shadow:0 4px 15px rgba(0,0,0,0.08); }
 
     /* TIMELINE */
@@ -55,6 +80,95 @@
 
     /* Footer */
     footer { background:#0a2a43; color:#dbeaf6; padding:30px 0; }
+
+    /* scroll-to-top */
+
+    /* Button position */
+    #rocketBtn {
+      position: fixed;
+      right: 20px;
+      bottom: 20px;
+      width: 60px;
+      height: 60px;
+      background: transparent;
+      border: none;
+      display: none;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      z-index: 10000;
+    }
+    #rocketBtn:focus,
+    #rocketBtn:active,
+    #rocketBtn:focus-visible {
+      outline: none !important;
+      box-shadow: none !important;
+      border: none !important;
+    }
+
+
+    /* Rocket image instead of SVG */
+    .rocket {
+      width: 42px;
+      height: auto;
+      display: block;
+      animation: idleShake 2.2s ease-in-out infinite;
+      transition: transform 0.5s ease;
+    }
+
+    /* Idle shake */
+    @keyframes idleShake {
+      0% { transform: translateX(0) rotate(0deg); }
+      25% { transform: translateX(-2px) rotate(-2deg); }
+      50% { transform: translateX(2px) rotate(2deg); }
+      75% { transform: translateX(-1px) rotate(-1deg); }
+      100% { transform: translateX(0) rotate(0deg); }
+    }
+
+    /* Take-off animation */
+    .fly .rocket {
+      animation: rocketFly 1.8s cubic-bezier(0.22, 0.61, 0.36, 1) forwards;
+    }
+
+    @keyframes rocketFly {
+      0% { transform: translateY(0) rotate(0deg); }
+      40% { transform: translateY(-30px) rotate(-4deg); }
+      100% { transform: translateY(-300px) rotate(0deg); }
+    }
+
+    /* Landing animation */
+    .land .rocket {
+      animation: rocketLand 1.2s ease-out forwards;
+    }
+
+    @keyframes rocketLand {
+      0% { transform: translateY(-300px); }
+      100% { transform: translateY(0); }
+    }
+
+    /* Smoke puff */
+    .smoke {
+      position: fixed;
+      width: 8px;
+      height: 8px;
+      background: rgba(180,180,180,0.9);
+      border-radius: 50%;
+      animation: smokeUp 1.6s linear forwards;
+      pointer-events: none;
+    }
+
+    @keyframes smokeUp {
+      0% { opacity: 1; transform: translateY(0) scale(0.6); }
+      60% { opacity: 0.6; transform: translateY(-40px) scale(1.1); }
+      100% { opacity: 0; transform: translateY(-140px) scale(1.8); }
+    }
+
+    /* Mobile */
+    @media (max-width:480px) {
+      #rocketBtn { right: 14px; bottom: 14px; width:48px; height:48px; }
+      .rocket { width:32px; }
+    }
+
 
     /* Utilities */
     .btn-accent { background:var(--accent); color:#fff; border-radius:50px; padding:10px 22px; }
@@ -129,6 +243,41 @@
       .timeline-logo { width: 32px; height: 32px; margin-top: -50px; }
     }
 
+    .whatsapp-btn {
+      position: fixed;
+      right: 20px;
+      bottom: 90px;
+      background: #25d366;
+      color: #fff;
+      padding: 16px; /* increase padding for bigger button */
+      border-radius: 50%;
+      font-size: 28px;
+      z-index: 9999;
+      text-align: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      animation: pulse 2s infinite;
+      transition: transform 0.3s;
+    }
+
+    .whatsapp-btn:hover {
+      transform: scale(1.2);
+    }
+
+    /* Pulse animation */
+    @keyframes pulse {
+      0% {
+        box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7);
+      }
+      70% {
+        box-shadow: 0 0 0 15px rgba(37, 211, 102, 0);
+      }
+      100% {
+        box-shadow: 0 0 0 0 rgba(37, 211, 102, 0);
+      }
+    }
     @media (max-width:768px){ .hero-caption h1{font-size:28px} .hero-caption p{font-size:15px} }
   </style>
 </head>
@@ -137,12 +286,21 @@
 <!-- LOADER -->
 <div id="loader"><div></div></div>
 
-<!-- DARK MODE BUTTON -->
+<!-- DARK MODE BUTTON 
 
 <button id="darkToggle" title="Toggle dark mode" style="position:fixed; right:20px; bottom:20px; z-index:9999;" class="btn btn-light rounded-circle"><i class="fa fa-moon"></i></button> 
+-->
 
 <!-- WHATSAPP BUTTON -->
-<a href="https://wa.me/917000000000" target="_blank" class="whatsapp-btn" style="position:fixed; right:20px; bottom:90px; background:#25d366; color:#fff; padding:12px; border-radius:50%; font-size:22px; z-index:9999;"><i class="fab fa-whatsapp"></i></a>
+<a href="https://wa.me/917000000000" target="_blank" class="whatsapp-btn">
+  <i class="fab fa-whatsapp"></i>
+</a>
+
+
+<!-- Rocket Scroll to Top Button -->
+<button id="rocketBtn" aria-label="Scroll to top">
+  <img src="rocket.png" class="rocket" alt="rocket icon">
+</button>
 
 <!-- NAVBAR -->
 <nav id="mainNav" class="navbar navbar-expand-lg navbar-dark fixed-top">
@@ -506,21 +664,83 @@
 <!-- CONTACT -->
 <section id="contact" data-aos="fade-up">
   <div class="container">
-    <h2 class="text-center mb-4">Contact Me</h2>
-    <div class="row">
+    
+    <h2 class="text-center mb-2">Contact</h2>
+    <p class="text-center mb-4" style="font-size: 16px;">
+      You can contact me for research discussions and collaborations.
+    </p>
+
+    <div class="row gy-4">
+
       <div class="col-md-6">
-        <div class="contact-card">
+        <div class="contact-card p-4 shadow-sm rounded bg-white h-100">
+
           <form id="contactForm">
-            <div class="form-group"><input type="text" id="name" class="form-control" placeholder="Your Name" required></div>
-            <div class="form-group"><input type="email" id="email" class="form-control" placeholder="Your Email" required></div>
-            <div class="form-group"><textarea id="message" class="form-control" rows="4" placeholder="Message" required></textarea></div>
-            <button type="submit" class="btn btn-accent btn-block">Send Message</button>
+
+          <!-- Row 1 : Name + Email -->
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label class="form-label">Your Name</label>
+              <input type="text" id="name" class="form-control" required>
+            </div>
+
+            <div class="col-md-6 mb-3">
+              <label class="form-label">Your Email</label>
+              <input type="email" id="email" class="form-control" required>
+            </div>
+          </div>
+
+          <!-- Subject -->
+          <div class="mb-3">
+            <label class="form-label">Subject</label>
+            <input type="text" id="subject" class="form-control" required>
+          </div>
+
+          <!-- Message -->
+          <div class="mb-3">
+            <label class="form-label">Message</label>
+            <textarea id="message" class="form-control" rows="11" required></textarea>
+          </div>
+
+          <!-- Button -->
+          <div class="text-center mt-4">
+            <button type="submit" class="btn btn-accent px-4">
+              Send Message
+            </button>
+          </div>
+
           </form>
         </div>
-      </div>
+    </div>
+
+
+
+      <!-- Address + Map -->
       <div class="col-md-6">
-        <iframe src="https://maps.google.com/maps?q=IIT%20Delhi&t=&z=13&ie=UTF8&iwloc=&output=embed" width="100%" height="350" style="border:0; border-radius:10px;"></iframe>
+        
+        <!-- Address Card -->
+        <div class="contact-card p-4 shadow-sm rounded bg-white mb-3">
+          <h4 class="mb-3"><i class="fas fa-map-marker-alt me-2 text-danger"></i>Location</h4>
+          <p class="mb-1">Clean Energy Laboratory,</p>
+          <p class="mb-1">Mahatma Gandhi Gramoday Parisar (Micromodel complex),</p>
+          <p class="mb-1">Indian Institute of Technology Delhi,</p>
+          <p class="mb-1">Hauz Khas, New Delhi - 110016 (India)</p>
+
+          <h4 class="mt-4 mb-2"><i class="fas fa-envelope me-2 text-primary"></i>Email</h4>
+          <p class="mb-1">Ujjiban.Kakati@rdat.iitd.ac.in</p>
+          <p class="mb-0">ujjibankakati@gmail.com</p>
+        </div>
+
+        <!-- Map Card -->
+        <div class="shadow-sm rounded overflow-hidden">
+          <iframe 
+            src="https://maps.google.com/maps?q=IIT%20Delhi&t=&z=13&ie=UTF8&iwloc=&output=embed"
+            width="100%" height="300" style="border:0;">
+          </iframe>
+        </div>
+
       </div>
+
     </div>
   </div>
 </section>
@@ -580,8 +800,8 @@
   window.addEventListener('scroll', function(){ if(window.scrollY>60) nav.classList.add('scrolled'); else nav.classList.remove('scrolled'); });
 
   // Dark mode toggle
-  var darkToggle = document.getElementById('darkToggle');
-  darkToggle.addEventListener('click', function(){ document.body.classList.toggle('dark'); });
+  //var darkToggle = document.getElementById('darkToggle');
+  //darkToggle.addEventListener('click', function(){ document.body.classList.toggle('dark'); });
 
   // Counter animation
   function animateCounters(){
@@ -612,6 +832,58 @@
       $('#blogModal').modal('show');
     });
   });
+  //scroll-to-top
+  (function () {
+    const rocketBtn = document.getElementById("rocketBtn");
+    if (!rocketBtn) return;
+
+    function updateVisibility() {
+      rocketBtn.style.display = window.scrollY > 200 ? "flex" : "none";
+    }
+
+    window.addEventListener("scroll", updateVisibility);
+    updateVisibility();
+
+    function smoothScrollToTop(duration) {
+      const start = window.scrollY;
+      const startTime = performance.now();
+
+      return new Promise((resolve) => {
+        function step(now) {
+          const progress = Math.min((now - startTime) / duration, 1);
+          const ease = 1 - Math.pow(1 - progress, 3);
+          window.scrollTo(0, start * (1 - ease));
+          progress < 1 ? requestAnimationFrame(step) : resolve();
+        }
+        requestAnimationFrame(step);
+      });
+    }
+
+    rocketBtn.addEventListener("click", async () => {
+      rocketBtn.classList.add("fly");
+
+      for (let i = 0; i < 12; i++) {
+        setTimeout(() => {
+          const s = document.createElement("div");
+          s.className = "smoke";
+          s.style.right = 28 + Math.random() * 36 + "px";
+          s.style.bottom = 46 + Math.random() * 40 + "px";
+          document.body.appendChild(s);
+          setTimeout(() => s.remove(), 1800);
+        }, i * 90);
+      }
+
+      await smoothScrollToTop(1600);
+
+      rocketBtn.classList.remove("fly");
+      rocketBtn.classList.add("land");
+
+      setTimeout(() => {
+        rocketBtn.classList.remove("land");
+        updateVisibility();
+      }, 1200);
+    });
+  })();
 
 </script>
 </body>
