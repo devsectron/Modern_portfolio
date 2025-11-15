@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Professional Portfolio — Ujjiban Kakati</title>
+
+  <!-- Bootstrap -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/css/lightbox.min.css">
+  <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css" />
+
+  <style>
+    :root{--accent:#0a2a43;--muted:#6b7280}
+    body { font-family: 'Inter', sans-serif; background:#f4f7fa; transition:0.3s; }
+    body.dark { background:#0b1116; color:#e6edf3; }
+
+    /* LOADER */
+    #loader { position:fixed; width:100%; height:100%; background:#fff; z-index:9999; display:flex; justify-content:center; align-items:center; }
+    #loader div { width:50px; height:50px; border:5px solid var(--accent); border-radius:50%; border-top-color:transparent; animation:spin 1s linear infinite; }
+    @keyframes spin { 100% { transform:rotate(360deg); } }
+
+    /* NAVBAR */
+    .navbar { background:transparent; transition:0.3s; }
+    .navbar.scrolled { background:rgba(10,42,67,0.9)!important; }
+    .navbar-brand { font-weight:700; color:#fff !important; }
+    .nav-link { color:#fff !important; font-weight:500; }
+    .navbar.scrolled .nav-link { color:#e6eef8 !important; }
+
+    /* HERO SLIDER */
+    .carousel-item img { height: 520px; object-fit: cover; filter:brightness(0.75); }
+    .hero-caption { position:absolute; top:40%; left:50%; transform:translate(-50%,-30%); z-index:2; color:#fff; text-align:center; }
+    .hero-caption h1{font-size:42px;font-weight:700}
+    .hero-caption p{font-size:18px;margin-bottom:18px;color:#e6eef8}
+
+    section { padding:70px 0; }
+
+    /* COUNTERS */
+    .counter-box { background:#fff; padding:30px; border-radius:10px; text-align:center; }
+    .counter-number { font-size:42px; font-weight:700; color:var(--accent); }
+
+    /* GALLERY */
+    .gallery img { width:100%; height:220px; object-fit:cover; border-radius:8px; }
+
+    /* CONTACT */
+    .contact-card { background:#fff; padding:25px; border-radius:10px; box-shadow:0 4px 15px rgba(0,0,0,0.08); }
+
+    /* TIMELINE */
+    .timeline { border-left:3px solid var(--accent); padding-left:20px; }
+    .timeline-item { margin-bottom:25px; }
+
+    /* TESTIMONIAL */
+    .testimonial { background:#fff; padding:20px; border-radius:10px; text-align:center; }
+
+    /* Footer */
+    footer { background:#0a2a43; color:#dbeaf6; padding:30px 0; }
+
+    /* Utilities */
+    .btn-accent { background:var(--accent); color:#fff; border-radius:50px; padding:10px 22px; }
+    /*blog new css */
+    .blog-card {
+      cursor: pointer;
+      transition: transform .2s, box-shadow .2s;
+    }
+    .blog-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+    }
+
+    .timeline-container {
+      position: relative;
+      padding-left: 40px;
+      border-left: 3px solid #0a2a43;
+    }
+    .timeline-item {
+      position: relative;
+      margin-bottom: 35px;
+      cursor: pointer;
+    }
+    .timeline-marker {
+      position: absolute;
+      left: -51px;
+      top: 5px;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      border: 3px solid #fff;
+      animation: pulse 2s infinite ease-in-out;
+    }
+    .marker-blue { background: #007bff; }
+    .marker-green { background: #28a745; }
+    .marker-orange { background: #fd7e14; }
+    .marker-red { background: #dc3545; }
+
+
+    @keyframes pulse {
+      0% { box-shadow: 0 0 0 0 rgba(0,0,0,0.3); }
+      70% { box-shadow: 0 0 0 15px rgba(0,0,0,0); }
+      100% { box-shadow: 0 0 0 0 rgba(0,0,0,0); }
+    }
+
+
+    .timeline-card {
+      background: #fff;
+      padding: 15px 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+      transition: 0.3s ease;
+    }
+    .timeline-card.collapsed .detail { display: none; }
+
+
+    .timeline-logo {
+      width: 40px;
+      height: 40px;
+      object-fit: contain;
+      margin-right: 10px;
+      margin-top: -40px; /* SHIFT LOGO UPWARD */
+    }
+    .timeline-header {
+      display: flex;
+      align-items: center;
+    }
+
+
+    @media(max-width: 768px) {
+      .timeline-card { padding: 12px 15px; }
+      .timeline-logo { width: 32px; height: 32px; margin-top: -50px; }
+    }
+
+    @media (max-width:768px){ .hero-caption h1{font-size:28px} .hero-caption p{font-size:15px} }
+  </style>
+</head>
+<body>
+
+<!-- LOADER -->
+<div id="loader"><div></div></div>
+
+<!-- DARK MODE BUTTON -->
+
+<button id="darkToggle" title="Toggle dark mode" style="position:fixed; right:20px; bottom:20px; z-index:9999;" class="btn btn-light rounded-circle"><i class="fa fa-moon"></i></button> 
+
+<!-- WHATSAPP BUTTON -->
+<a href="https://wa.me/917000000000" target="_blank" class="whatsapp-btn" style="position:fixed; right:20px; bottom:90px; background:#25d366; color:#fff; padding:12px; border-radius:50%; font-size:22px; z-index:9999;"><i class="fab fa-whatsapp"></i></a>
+
+<!-- NAVBAR -->
+<nav id="mainNav" class="navbar navbar-expand-lg navbar-dark fixed-top">
+  <div class="container">
+    <a class="navbar-brand" href="#">Ujjiban Kakati</a>
+    <button class="navbar-toggler" data-toggle="collapse" data-target="#menu"><span class="navbar-toggler-icon"></span></button>
+    <div class="collapse navbar-collapse" id="menu">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
+        <li class="nav-item"><a class="nav-link" href="#work">Work</a></li>
+        <li class="nav-item"><a class="nav-link" href="#research">Research</a></li>
+        <li class="nav-item"><a class="nav-link" href="#timeline">Timeline</a></li>
+        <li class="nav-item"><a class="nav-link" href="#projects">Projects</a></li>
+        <li class="nav-item"><a class="nav-link" href="#testimonials">Testimonials</a></li>
+        <li class="nav-item"><a class="nav-link" href="#blog">Blog</a></li>
+        <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO SLIDER -->
+<div id="heroSlider" class="carousel slide" data-ride="carousel">
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+      <img src="hero-bg.jpg" class="d-block w-100" alt="hero1">
+      <div class="hero-caption" data-aos="fade-up">
+        <h1>Ujjiban Kakati</h1>
+        <p>Prime Minister Research Fellow (PMRF), Centre for Rural Development and Technology, IIT Delhi</p>
+        <a href="#projects" class="btn-accent">View Projects</a>
+      </div>
+    </div>
+    <div class="carousel-item">
+      <img src="pic1.jpg" class="d-block w-100" alt="hero2">
+      <div class="hero-caption" data-aos="fade-up">
+        <h1>Researcher & Engineer</h1>
+        <p>Hybrid energy systems · Thermal storage · AI forecasting</p>
+        <a href="#contact" class="btn-accent">Contact</a>
+      </div>
+    </div>
+    <div class="carousel-item">
+      <img src="pic2.jpg" class="d-block w-100" alt="hero3">
+      <div class="hero-caption" data-aos="fade-up">
+        <h1>Photographer</h1>
+        <p>Visual storytelling and documentary photography</p>
+        <a href="#gallery" class="btn-accent">View Gallery</a>
+      </div>
+    </div>
+  </div>
+  <a class="carousel-control-prev" href="#heroSlider" role="button" data-slide="prev"><span class="carousel-control-prev-icon" aria-hidden="true"></span></a>
+  <a class="carousel-control-next" href="#heroSlider" role="button" data-slide="next"><span class="carousel-control-next-icon" aria-hidden="true"></span></a>
+</div>
+
+<!-- ABOUT -->
+<section id="about" data-aos="fade-up">
+  <div class="container text-center">
+    <h2 class="mb-4">About</h2>
+    <p class="w-75 mx-auto">I am Ujjiban — a Prime Minister Research Fellow (PMRF) at the Centre for Rural Development and Technology, IIT Delhi. My work focuses on practical, scalable solutions in hybrid energy systems, thermal storage, and AI-driven forecasting models for renewables.</p>
+    <a href="resume.pdf" class="btn btn-outline-primary mt-3" download><i class="fa fa-download mr-2"></i>Download Resume (PDF)</a>
+  </div>
+</section>
+
+<!-- COUNTERS -->
+<section data-aos="fade-up" style="background:#fff;">
+  <div class="container">
+    <div class="row text-center">
+      <div class="col-md-4 mb-3"><div class="counter-box"><div class="counter-number" data-count="12">0</div><p>Research Papers</p></div></div>
+      <div class="col-md-4 mb-3"><div class="counter-box"><div class="counter-number" data-count="5">0</div><p>Awards</p></div></div>
+      <div class="col-md-4 mb-3"><div class="counter-box"><div class="counter-number" data-count="8">0</div><p>Projects</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- UPDATED WORK & EDUCATION SECTION (Logos + Animation + Mobile Collapsible) -->
+
+<section id="education" data-aos="fade-up" style="background:#fff;">
+  <div class="container">
+    <h2 class="text-center mb-4">Education</h2>
+
+    <div class="timeline-container">
+
+      <div class="timeline-item" onclick="this.querySelector('.timeline-card').classList.toggle('collapsed')">
+        <div class="timeline-marker marker-blue"></div>
+        <div class="timeline-card collapsed">
+          <div class="timeline-header">
+            <img src="iitdelhi-logo.png" class="timeline-logo">
+            <div>
+              <h5 class="font-weight-bold mb-1">Doctor of Philosophy (PhD) — Renewable Energy, Thermochemical Conversion</h5>
+              <p class="mb-1 text-muted">Indian Institute of Technology, Delhi</p>
+              <small class="text-muted">Dec 2020 – Dec 2025</small>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="timeline-item" onclick="this.querySelector('.timeline-card').classList.toggle('collapsed')">
+        <div class="timeline-marker marker-green"></div>
+        <div class="timeline-card collapsed">
+          <div class="timeline-header">
+            <img src="iitdelhi-logo.png" class="timeline-logo">
+            <div>
+              <h5 class="font-weight-bold mb-1">M.Tech — Energy, Gasification, Sustainability</h5>
+              <p class="mb-1 text-muted">Indian Institute of Technology, Delhi</p>
+              <small class="text-muted">2019 – 2020</small>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="timeline-item" onclick="this.querySelector('.timeline-card').classList.toggle('collapsed')">
+        <div class="timeline-marker marker-orange"></div>
+        <div class="timeline-card collapsed">
+          <div class="timeline-header">
+            <img src="tezpur-logo.png" class="timeline-logo">
+            <div>
+              <h5 class="font-weight-bold mb-1">M.Tech — Energy Technology</h5>
+              <p class="mb-1 text-muted">Tezpur University</p>
+              <small class="text-muted">2018 – 2019</small>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="timeline-item" onclick="this.querySelector('.timeline-card').classList.toggle('collapsed')">
+        <div class="timeline-marker marker-red"></div>
+        <div class="timeline-card collapsed">
+          <div class="timeline-header">
+            <img src="vtu-logo.png" class="timeline-logo">
+            <div>
+              <h5 class="font-weight-bold mb-1">Bachelor's Degree — Mechanical Engineering</h5>
+              <p class="mb-1 text-muted">Visvesvaraya Technological University</p>
+              <small class="text-muted">2011 – 2015</small>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="timeline-item" onclick="this.querySelector('.timeline-card').classList.toggle('collapsed')">
+        <div class="timeline-marker marker-green"></div>
+        <div class="timeline-card collapsed">
+          <div class="timeline-header">
+            <img src="mvm-logo.png" class="timeline-logo">
+            <div>
+              <h5 class="font-weight-bold mb-1">Senior Secondary — Science</h5>
+              <p class="mb-1 text-muted">Maharishi Vidya Mandir, Guwahati</p>
+              <small class="text-muted">2008 – 2010</small>
+            </div>
+          </div>
+          <p class="detail small text-muted">Activities: Debate · Quiz</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<section id="work" data-aos="fade-up">
+  <div class="container">
+    <h2 class="text-center mb-4">Professional Experience</h2>
+
+    <div class="timeline-container">
+
+      <div class="timeline-item" onclick="this.querySelector('.timeline-card').classList.toggle('collapsed')">
+        <div class="timeline-marker marker-blue"></div>
+        <div class="timeline-card">
+          <div class="timeline-header">
+            <img src="iitdelhi-logo.png" class="timeline-logo">
+            <div>
+              <h5 class="font-weight-bold mb-1">Indian Institute of Technology, Delhi</h5>
+              <p class="mb-1 text-muted">Prime Minister's Research Fellow (PMRF)</p>
+              <small class="text-muted">Dec 2021 – Present · 4 yrs</small>
+            </div>
+          </div>
+          <p class="detail mt-2 small text-muted">Thermochemical Conversion · Designing · Renewable Energy · Waste to Energy</p>
+        </div>
+      </div>
+
+      <div class="timeline-item" onclick="this.querySelector('.timeline-card').classList.toggle('collapsed')">
+        <div class="timeline-marker marker-green"></div>
+        <div class="timeline-card collapsed">
+          <div class="timeline-header">
+            <img src="iitdelhi-logo.png" class="timeline-logo">
+            <div>
+              <h5 class="font-weight-bold mb-1">Indian Institute of Technology, Delhi</h5>
+              <p class="mb-1 text-muted">PhD Scholar</p>
+              <small class="text-muted">Jan 2021 – Present · 4 yrs 11 mos</small>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="timeline-item" onclick="this.querySelector('.timeline-card').classList.toggle('collapsed')">
+        <div class="timeline-marker marker-orange"></div>
+        <div class="timeline-card collapsed">
+          <div class="timeline-header">
+            <img src="iitdelhi-logo.png" class="timeline-logo">
+            <div>
+              <h5 class="font-weight-bold mb-1">Indian Institute of Technology, Delhi</h5>
+              <p class="mb-1 text-muted">M.Tech Research Scholar</p>
+              <small class="text-muted">Jul 2019 – Jan 2021 · 1 yr 7 mos</small>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="timeline-item" onclick="this.querySelector('.timeline-card').classList.toggle('collapsed')">
+        <div class="timeline-marker marker-red"></div>
+        <div class="timeline-card collapsed">
+          <div class="timeline-header">
+            <img src="iitg-logo.png" class="timeline-logo">
+            <div>
+              <h5 class="font-weight-bold mb-1">Indian Institute of Technology, Guwahati</h5>
+              <p class="mb-1 text-muted">Intern</p>
+              <small class="text-muted">Jan 2015 – Feb 2015 · 2 mos</small>
+            </div>
+          </div>
+          <p class="detail small text-muted">Guwahati Area, India</p>
+        </div>
+      </div>
+
+      <div class="timeline-item" onclick="this.querySelector('.timeline-card').classList.toggle('collapsed')">
+        <div class="timeline-marker marker-green"></div>
+        <div class="timeline-card collapsed">
+          <div class="timeline-header">
+            <img src="iitb-logo.png" class="timeline-logo">
+            <div>
+              <h5 class="font-weight-bold mb-1">Indian Institute of Technology, Bombay</h5>
+              <p class="mb-1 text-muted">College Representative — Entrepreneurship Cell</p>
+              <small class="text-muted">Sep 2013 – Feb 2015 · 1 yr 6 mos</small>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="timeline-item" onclick="this.querySelector('.timeline-card').classList.toggle('collapsed')">
+        <div class="timeline-marker marker-orange"></div>
+        <div class="timeline-card collapsed">
+          <div class="timeline-header">
+            <img src="sewa-logo.png" class="timeline-logo">
+            <div>
+              <h5 class="font-weight-bold mb-1">Intern — SEWA</h5>
+              <p class="mb-1 text-muted">Socio Educational Welfare Association</p>
+              <small class="text-muted">Jul 2014 – Jul 2014 · 1 mo</small>
+            </div>
+          </div>
+          <p class="detail small text-muted">Community awareness programme on counselling services & women protection laws.</p>
+        </div>
+      </div>
+
+      <div class="timeline-item" onclick="this.querySelector('.timeline-card').classList.toggle('collapsed')">
+        <div class="timeline-marker marker-red"></div>
+        <div class="timeline-card collapsed">
+          <div class="timeline-header">
+            <img src="iocl-logo.png" class="timeline-logo">
+            <div>
+              <h5 class="font-weight-bold mb-1">Trainee</h5>
+              <p class="mb-1 text-muted">Indian Oil Corporation Limited</p>
+              <small class="text-muted">Jan 2014 – Jan 2014 · 1 mo</small>
+            </div>
+          </div>
+          <p class="detail small text-muted">Industrial training across Guwahati Refinery plants.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- TIMELINE -->
+<section id="timeline" data-aos="fade-up" style="background:#fff;">
+  <div class="container">
+    <h2 class="text-center mb-4">Research Timeline</h2>
+    <div class="timeline">
+      <div class="timeline-item"><h5>2025</h5><p>Thermal storage advancement research.</p></div>
+      <div class="timeline-item"><h5>2024</h5><p>Solar-Thermal hybrid system modelling.</p></div>
+      <div class="timeline-item"><h5>2023</h5><p>ML forecasting model for renewable energy.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects" data-aos="fade-up">
+  <div class="container">
+    <h2 class="text-center mb-4">Projects</h2>
+    <div class="row">
+      <div class="col-md-4 mb-4" data-aos="zoom-in"><div class="card p-3 h-100"><h5>Solar-Thermal Hybrid Setup</h5><p class="mb-0 small text-muted">Modeling and experimental validation.</p></div></div>
+      <div class="col-md-4 mb-4" data-aos="zoom-in" data-aos-delay="100"><div class="card p-3 h-100"><h5>AI Renewable Forecasting Model</h5><p class="mb-0 small text-muted">Neural networks for generation prediction.</p></div></div>
+      <div class="col-md-4 mb-4" data-aos="zoom-in" data-aos-delay="200"><div class="card p-3 h-100"><h5>Thermal Storage Material Analysis</h5><p class="mb-0 small text-muted">PCM optimization and geometry studies.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section id="testimonials" data-aos="fade-up" style="background:#fff;">
+  <div class="container">
+    <h2 class="text-center mb-4">Testimonials</h2>
+    <div id="testiCarousel" class="carousel slide" data-ride="carousel">
+      <div class="carousel-inner">
+        <div class="carousel-item active"><div class="testimonial p-4"><p>"Excellent research guidance and collaboration."</p><strong>- Prof. A</strong></div></div>
+        <div class="carousel-item"><div class="testimonial p-4"><p>"Highly skilled in experimental and computational work."</p><strong>- Dr. B</strong></div></div>
+        <div class="carousel-item"><div class="testimonial p-4"><p>"A dedicated researcher with strong publication record."</p><strong>- Colleague C</strong></div></div>
+      </div>
+      <a class="carousel-control-prev" href="#testiCarousel" role="button" data-slide="prev"><span class="carousel-control-prev-icon" aria-hidden="true"></span></a>
+      <a class="carousel-control-next" href="#testiCarousel" role="button" data-slide="next"><span class="carousel-control-next-icon" aria-hidden="true"></span></a>
+    </div>
+  </div>
+</section>
+
+<!-- BLOG -->
+<section id="blog" data-aos="fade-up">
+  <div class="container">
+    <h2 class="text-center mb-4">Blog</h2>
+    <div class="row">
+      <div class="col-md-4 mb-4">
+        <div class="card h-100 blog-card" data-title="Blog Post 1" data-img="pic1.jpg" data-content="Full content of blog post 1 goes here...">
+          <img src="pic1.jpg" class="card-img-top">
+          <div class="card-body">
+            <h5 class="card-title">Blog Post 1</h5>
+            <p class="card-text small text-muted">Short summary of the post.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-4 mb-4">
+        <div class="card h-100 blog-card" data-title="Blog Post 2" data-img="pic2.jpg" data-content="Full content of blog post 2 goes here...">
+          <img src="pic2.jpg" class="card-img-top">
+          <div class="card-body">
+            <h5 class="card-title">Blog Post 2</h5>
+            <p class="card-text small text-muted">Short summary of the post.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-4 mb-4">
+        <div class="card h-100 blog-card" data-title="Blog Post 3" data-img="pic3.jpg" data-content="Full content of blog post 3 goes here...">
+          <img src="pic3.jpg" class="card-img-top">
+          <div class="card-body">
+            <h5 class="card-title">Blog Post 3</h5>
+            <p class="card-text small text-muted">Short summary of the post.</p>
+          </div>
+        </div>
+      </div>
+    </div>  
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section id="gallery" data-aos="fade-up" style="background:#fff;">
+  <div class="container">
+    <h2 class="text-center mb-4">Gallery</h2>
+    <div class="row gallery">
+      <div class="col-md-4 mb-4"><a href="pic1.jpg" data-lightbox="gallery"><img src="pic1.jpg"></a></div>
+      <div class="col-md-4 mb-4"><a href="pic2.jpg" data-lightbox="gallery"><img src="pic2.jpg"></a></div>
+      <div class="col-md-4 mb-4"><a href="pic3.jpg" data-lightbox="gallery"><img src="pic3.jpg"></a></div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" data-aos="fade-up">
+  <div class="container">
+    <h2 class="text-center mb-4">Contact Me</h2>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="contact-card">
+          <form id="contactForm">
+            <div class="form-group"><input type="text" id="name" class="form-control" placeholder="Your Name" required></div>
+            <div class="form-group"><input type="email" id="email" class="form-control" placeholder="Your Email" required></div>
+            <div class="form-group"><textarea id="message" class="form-control" rows="4" placeholder="Message" required></textarea></div>
+            <button type="submit" class="btn btn-accent btn-block">Send Message</button>
+          </form>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <iframe src="https://maps.google.com/maps?q=IIT%20Delhi&t=&z=13&ie=UTF8&iwloc=&output=embed" width="100%" height="350" style="border:0; border-radius:10px;"></iframe>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container text-center">
+    <div class="row align-items-center">
+      <div class="col-md-6 text-md-left mb-3 mb-md-0">
+        <p class="mb-0">© 2025 Ujjiban Kakati</p>
+        <small class="text-muted">Prime Minister Research Fellow (PMRF), Centre for Rural Development and Technology, IIT Delhi</small>
+      </div>
+      <div class="col-md-6 text-md-right">
+        <a href="#" class="text-light mr-3"><i class="fab fa-linkedin fa-lg"></i></a>
+        <a href="#" class="text-light mr-3"><i class="fab fa-github fa-lg"></i></a>
+        <a href="#" class="text-light"><i class="fa-solid fa-graduation-cap fa-lg"></i></a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- BLOG POPUP MODAL -->
+<div class="modal fade" id="blogModal" tabindex="-1">
+  <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="blogModalTitle"></h5>
+        <button type="button" class="close" data-dismiss="modal">
+          <span>&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <img id="blogModalImg" src="" class="img-fluid mb-3 rounded">
+        <p id="blogModalContent" style="font-size:16px; line-height:1.6;"></p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SCRIPTS -->
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/js/lightbox.min.js"></script>
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
+<script>
+  // Hide loader
+  window.addEventListener('load', function(){
+    var loader = document.getElementById('loader'); if(loader) loader.style.display = 'none';
+  });
+
+  // AOS
+  AOS.init({duration:900, once:true});
+
+  // Sticky navbar background on scroll
+  var nav = document.getElementById('mainNav');
+  window.addEventListener('scroll', function(){ if(window.scrollY>60) nav.classList.add('scrolled'); else nav.classList.remove('scrolled'); });
+
+  // Dark mode toggle
+  var darkToggle = document.getElementById('darkToggle');
+  darkToggle.addEventListener('click', function(){ document.body.classList.toggle('dark'); });
+
+  // Counter animation
+  function animateCounters(){
+    document.querySelectorAll('.counter-number').forEach(function(el){
+      var end = parseInt(el.getAttribute('data-count'))||0; var start=0; var duration=1500; var stepTime=Math.abs(Math.floor(duration/end)); var timer=setInterval(function(){ start+=1; el.textContent=start; if(start>=end) clearInterval(timer); }, stepTime);
+    });
+  }
+  var countersTriggered=false; window.addEventListener('scroll', function(){ var section=document.querySelector('.counter-box'); if(!countersTriggered && section){ var rect=section.getBoundingClientRect(); if(rect.top<window.innerHeight){ animateCounters(); countersTriggered=true; } }});
+
+  // Contact form (simple client-side demo)
+  document.getElementById('contactForm').addEventListener('submit', function(e){ e.preventDefault(); alert('Thank you, message sent (demo).'); this.reset(); });
+
+  // Smooth scroll for nav links
+  document.querySelectorAll('a.nav-link').forEach(function(link){ link.addEventListener('click', function(e){ e.preventDefault(); var t=document.querySelector(this.getAttribute('href')); if(t) t.scrollIntoView({behavior:'smooth', block:'start'}); }); });
+  // Blog popup
+  document.querySelectorAll('.blog-card').forEach(card => {
+    card.addEventListener('click', function () {
+
+      document.getElementById('blogModalTitle').textContent =
+        this.getAttribute('data-title');
+
+      document.getElementById('blogModalImg').src =
+        this.getAttribute('data-img');
+
+      document.getElementById('blogModalContent').textContent =
+        this.getAttribute('data-content');
+
+      $('#blogModal').modal('show');
+    });
+  });
+
+</script>
+</body>
+</html>
